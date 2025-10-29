@@ -19,6 +19,7 @@ public class UserController {
 
 	private final UserService userService;
 
+
 	@PostMapping("/users")
 	@ResponseStatus(HttpStatus.CREATED)
 	// loginId, password, name, birthday
