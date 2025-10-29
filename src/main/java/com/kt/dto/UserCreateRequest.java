@@ -1,4 +1,11 @@
 package com.kt.dto;
 
-public class UserCreateRequest {
+import java.time.LocalDate;
+
+public record UserCreateRequest(
+	String loginId,
+	String password,
+	String name,
+	LocalDate birthday
+) {
 }
