@@ -1,19 +1,14 @@
 package com.kt.domain.product;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.kt.common.BaseEntity;
-import com.kt.domain.order.Order;
 import com.kt.domain.orderproduct.OrderProduct;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 
@@ -26,6 +21,8 @@ public class Product extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private ProductStatus status;
 
+	@OneToMany(mappedBy = "product")
+	private List<OrderProduct> orderProducts = new ArrayList<>();
 	//생성
 	//수정
 	//삭제
