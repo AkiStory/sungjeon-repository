@@ -1,4 +1,4 @@
-package com.kt.controller;
+package com.kt.controller.user;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kt.dto.UserCreateRequest;
-import com.kt.dto.UserUpdatePasswordRequest;
+import com.kt.dto.user.UserCreateRequest;
+import com.kt.dto.user.UserUpdatePasswordRequest;
 import com.kt.service.UserService;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -37,7 +35,6 @@ public class UserController {
 	// di받는 방식이 생성자주입 씀 -> 재할당을 금지함
 
 	private final UserService userService;
-
 
 	// API 문서화는 크게 2가지의 방식이 존재
 	// 1. Swagger -> 장점 UI가 이쁘다, 어노테이션 기반이라서 작성이 쉽다.

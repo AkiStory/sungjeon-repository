@@ -19,16 +19,53 @@ public class Product extends BaseEntity {
 	private Long price;
 	private Long stock;
 	@Enumerated(EnumType.STRING)
-	private ProductStatus status;
+	private ProductStatus status = ProductStatus.ACTIVATED;
 
 	@OneToMany(mappedBy = "product")
 	private List<OrderProduct> orderProducts = new ArrayList<>();
+
+	public Product(String name, Long price, Long stock) {
+		this.name = name;
+		this.price = price;
+		this.stock = stock;
+	}
+
+	public void update(String name, Long price, Long stock) {
+		this.name = name;
+		this.price = price;
+		this.stock = stock;
+	}
+
+	public void soldOut(){
+		this.status = ProductStatus.SOLD_OUT;
+	}
+
+	public void inActivate(){
+		this.status = ProductStatus.IN_ACTIVATED;
+	}
+
+	public void Activate(){
+		this.status = ProductStatus.ACTIVATED;
+	}
+
+	public void delete(){
+		this.status = ProductStatus.DELETED;
+	}
+
+	public void decreaseStock(Long quantity){
+		this.stock -= quantity;
+	}
+
+	public void increaseStock(Long quantity){
+		this.stock += quantity;
+	}
+
 	//생성
-	//수정
-	//삭제
-	//조회(리스트, 단건)
+	//수정 - 정보수정, 상태수정
 	//상태변경
+	//삭제
 	//재고수량감소
 	//재고수량증가
+	//조회(리스트, 단건)
 
 }

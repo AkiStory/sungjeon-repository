@@ -8,11 +8,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kt.domain.user.User;
-import com.kt.dto.UserCreateRequest;
+import com.kt.dto.user.UserCreateRequest;
 import com.kt.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
+// 구현체가 하나 이상 필요로 해야 인터페이스가 의미가 있다
+// 인터페이스가 : 구현체 - 1 : 1 로 나눠야 하나?
+// 관례를 지키려고 추상화
+// 관습적 추상화
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -24,19 +28,19 @@ public class UserService {
 	// PSA - Portable Service Abstraction
 	// 환경설정을 살짝 바꿔서 일관된 서비스를 제공하는 것
 	public void create(UserCreateRequest request) {
-			var newUser = new User(
-				request.loginId(),
-				request.password(),
-				request.name(),
-				request.email(),
-				request.mobile(),
-				request.gender(),
-				request.birthday(),
-				LocalDateTime.now(),
-				LocalDateTime.now()
-			);
+		var newUser = new User(
+			request.loginId(),
+			request.password(),
+			request.name(),
+			request.email(),
+			request.mobile(),
+			request.gender(),
+			request.birthday(),
+			LocalDateTime.now(),
+			LocalDateTime.now()
+		);
 
-			userRepository.save(newUser);
+		userRepository.save(newUser);
 	}
 
 	public boolean isDuplicateLoginId(String loginId) {
@@ -47,11 +51,11 @@ public class UserService {
 		var user = userRepository.findById(id)
 			.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
 
-		if(!user.getPassword().equals(oldPassword)) {
+		if (!user.getPassword().equals(oldPassword)) {
 			throw new IllegalArgumentException("기존 비밀번호가 일치하지 않습니다.");
 		}
 
-		if(oldPassword.equals(password)) {
+		if (oldPassword.equals(password)) {
 			throw new IllegalArgumentException("기존 비밀번호와 동일한 비밀번호로 변경할 수 없습니다.");
 		}
 
