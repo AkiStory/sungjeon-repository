@@ -7,8 +7,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kt.common.ErrorCode;
+import com.kt.common.Preconditions;
 import com.kt.domain.user.User;
-import com.kt.dto.user.UserCreateRequest;
+import com.kt.dto.user.UserRequest;
 import com.kt.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -27,7 +29,7 @@ public class UserService {
 	// 트랜잭션 처리해줘
 	// PSA - Portable Service Abstraction
 	// 환경설정을 살짝 바꿔서 일관된 서비스를 제공하는 것
-	public void create(UserCreateRequest request) {
+	public void create(UserRequest.Create request) {
 		var newUser = new User(
 			request.loginId(),
 			request.password(),
@@ -51,13 +53,8 @@ public class UserService {
 		var user = userRepository.findById(id)
 			.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
 
-		if (!user.getPassword().equals(oldPassword)) {
-			throw new IllegalArgumentException("기존 비밀번호가 일치하지 않습니다.");
-		}
-
-		if (oldPassword.equals(password)) {
-			throw new IllegalArgumentException("기존 비밀번호와 동일한 비밀번호로 변경할 수 없습니다.");
-		}
+		Preconditions.validate(!user.getPassword().equals(oldPassword), ErrorCode.NOT_MATCH_OLD_PASSWORD);
+		Preconditions.validate(!oldPassword.equals(password), ErrorCode.NOT_ALLOW_SAME_PASSWORD);
 
 		user.changePassword(password);
 	}
@@ -68,13 +65,11 @@ public class UserService {
 	}
 
 	public User detail(Long id) {
-		return userRepository.findById(id)
-			.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+		return userRepository.findByIdOrThrow(id);
 	}
 
 	public void update(Long id, String name, String email, String mobile) {
-		var user = userRepository.findById(id)
-			.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+		var user = userRepository.findByIdOrThrow(id);
 
 		user.update(name, email, mobile);
 	}

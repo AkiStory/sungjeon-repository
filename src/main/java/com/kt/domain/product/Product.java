@@ -36,27 +36,27 @@ public class Product extends BaseEntity {
 		this.stock = stock;
 	}
 
-	public void soldOut(){
+	public void soldOut() {
 		this.status = ProductStatus.SOLD_OUT;
 	}
 
-	public void inActivate(){
+	public void inActivate() {
 		this.status = ProductStatus.IN_ACTIVATED;
 	}
 
-	public void Activate(){
+	public void activate() {
 		this.status = ProductStatus.ACTIVATED;
 	}
 
-	public void delete(){
+	public void delete() {
 		this.status = ProductStatus.DELETED;
 	}
 
-	public void decreaseStock(Long quantity){
+	public void decreaseStock(Long quantity) {
 		this.stock -= quantity;
 	}
 
-	public void increaseStock(Long quantity){
+	public void increaseStock(Long quantity) {
 		this.stock += quantity;
 	}
 

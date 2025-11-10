@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kt.common.SwaggerAssistance;
 import com.kt.domain.user.User;
 import com.kt.dto.user.UserUpdateRequest;
 import com.kt.service.UserService;
@@ -22,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/admin/users")
 @RequiredArgsConstructor
-public class AdminUserController {
+public class AdminUserController extends SwaggerAssistance {
 	private final UserService userService;
 	// 유저 리스트 조회
 

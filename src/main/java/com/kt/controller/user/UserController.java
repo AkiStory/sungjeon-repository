@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kt.dto.user.UserCreateRequest;
+import com.kt.common.ApiResult;
+import com.kt.common.SwaggerAssistance;
+import com.kt.dto.user.UserRequest;
 import com.kt.dto.user.UserUpdatePasswordRequest;
 import com.kt.service.UserService;
 
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,11 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
-@ApiResponses(value = {
-	@ApiResponse(responseCode = "400", description = "유효성 검사 실패"),
-	@ApiResponse(responseCode = "500", description = "서버 에러 - 백엔드에 바로 문의 바랍니다.")
-})
-public class UserController {
+public class UserController extends SwaggerAssistance {
 	// userservice를 di받아야함
 	// di받는 방식이 생성자주입 씀 -> 재할당을 금지함
 
@@ -50,8 +46,9 @@ public class UserController {
 	// loginId, password, name, birthday
 	// json형태의 body에 담겨서 post요청으로 /users로 들어오면
 	// @RequestBody를보고 jacksonObjectMapper가 동작해서 json을 읽어서 dto로 변환
-	public void create(@Valid @RequestBody UserCreateRequest request) {
+	public ApiResult<Void> create(@Valid @RequestBody UserRequest.Create request) {
 		userService.create(request);
+		return ApiResult.ok();
 	}
 
 	// /users/duplicate-login-id?loginId=ktuser
