@@ -49,7 +49,7 @@ public class Product extends BaseEntity {
 	}
 
 	public void delete() {
-		this.status = ProductStatus.DELETED;
+		this.status = ProductStatus.DELETED; // 논리삭제
 	}
 
 	public void decreaseStock(Long quantity) {
@@ -58,6 +58,14 @@ public class Product extends BaseEntity {
 
 	public void increaseStock(Long quantity) {
 		this.stock += quantity;
+	}
+
+	public boolean canProvide(Long quantity) {
+		return this.stock >= quantity;
+	}
+
+	public void mapToOrderProduct(OrderProduct orderProduct) {
+		this.orderProducts.add(orderProduct);
 	}
 
 	//생성
