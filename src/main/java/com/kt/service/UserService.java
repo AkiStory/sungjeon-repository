@@ -65,11 +65,11 @@ public class UserService {
 	}
 
 	public User detail(Long id) {
-		return userRepository.findByIdOrThrow(id);
+		return userRepository.findByIdOrThrow(id, ErrorCode.NOT_FOUND_USER);
 	}
 
 	public void update(Long id, String name, String email, String mobile) {
-		var user = userRepository.findByIdOrThrow(id);
+		var user = userRepository.findByIdOrThrow(id, ErrorCode.NOT_FOUND_USER);
 
 		user.update(name, email, mobile);
 	}
