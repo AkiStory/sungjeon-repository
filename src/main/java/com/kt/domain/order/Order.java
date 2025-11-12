@@ -39,6 +39,21 @@ public class Order extends BaseEntity {
 
 	@OneToMany(mappedBy = "order")
 	private List<OrderProduct> orderProducts = new ArrayList<>();
+
+	private Order(Receiver receiver, User user) {
+		this.receiver = receiver;
+		this.user = user;
+		this.status = OrderStatus.PENDING;
+		this.deliveredAt = LocalDateTime.now().plusDays(2);
+	}
+
+	public static Order create(Receiver receiver, User user) {
+		return new Order(receiver, user);
+	}
+
+	public void mapToOrderProduct(OrderProduct orderProduct) {
+		this.orderProducts.add(orderProduct);
+	}
 	//하나의 오더는 여러개의 상품을 가질수있음
 	// 1:N
 	//하나의 상품은 여러개의 오더를 가질수있음
