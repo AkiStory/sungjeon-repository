@@ -6,10 +6,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import com.kt.domain.order.Order;
 import com.kt.domain.order.QOrder;
 import com.kt.domain.orderproduct.QOrderProduct;
 import com.kt.domain.product.QProduct;
+import com.kt.dto.order.OrderResponse;
 import com.kt.dto.order.QOrderResponse_Search;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -26,7 +26,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 	private final QProduct product = QProduct.product;
 
 	@Override
-	public Page<Order> search(
+	public Page<OrderResponse.Search> search(
 		String keyword,
 		Pageable pageable
 	) { // offset , limit
@@ -51,7 +51,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 			.orderBy(order.id.desc())
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize())
-			.fetch().stream().map(); // 리스트를 반환 (리스트 전체 조회) , fetchOne <- 오더 하나 반환 (단건조회)
+			.fetch(); // 리스트를 반환 (리스트 전체 조회) , fetchOne <- 오더 하나 반환 (단건조회)
 
 		var total = (long)jpaQueryFactory.select(order.id)
 			.from(order)

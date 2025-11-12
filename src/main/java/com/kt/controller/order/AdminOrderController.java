@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kt.common.ApiResult;
 import com.kt.common.Paging;
-import com.kt.domain.order.Order;
+import com.kt.dto.order.OrderResponse;
 import com.kt.repository.order.OrderRepository;
 
 import io.swagger.v3.oas.annotations.Parameter;
@@ -21,7 +21,7 @@ public class AdminOrderController {
 	private final OrderRepository orderRepository;
 
 	@GetMapping
-	public ApiResult<Page<Order>> search(
+	public ApiResult<Page<OrderResponse.Search>> search(
 		@RequestParam(required = false) String keyword,
 		@Parameter(hidden = true) Paging paging
 	) {
